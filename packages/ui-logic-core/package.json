@@ -1,0 +1,41 @@
+{
+  "name": "ui-logic-core",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Storex core module - a storage layer without assumptions",
+  "main": "lib/index.js",
+  "typings": "lib/index",
+  "scripts": {
+    "prepare": "tsc",
+    "prepare:watch": "npm run prepare -- -w",
+    "test": "mocha --require ts-node/register \"ts/**/*.test.ts\"",
+    "test:watch": "mocha -r source-map-support/register -r ts-node/register \"ts/**/*.test.ts\" --watch --watch-extensions ts"
+  },
+  "keywords": [
+    "logic",
+    "single-responsibilty"
+  ],
+  "author": "Vincent den Boer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShishKabab/ui-logic.git"
+  },
+  "dependencies": {
+    "events": "^3.0.0",
+    "source-map-support": "^0.4.18"
+  },
+  "devDependencies": {
+    "@types/events": "^1.2.0",
+    "@types/expect": "^1.20.4",
+    "@types/mocha": "^2.2.44",
+    "@types/node": "^10.12.11",
+    "expect": "^23.5.0",
+    "immutability-helper": "^3.0.0",
+    "mocha": "^4.0.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
+  },
+  "peerDependencies": {
+    "immutability-helper": "^3.0.0"
+  }
+}

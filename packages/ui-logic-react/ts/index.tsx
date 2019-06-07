@@ -52,13 +52,13 @@ export abstract class UIElement<Props, State = {}, Event extends logic.UIEvent<{
 
     componentDidMount() {
         if (this.logic) {
-            this.processEvent('init', undefined)
+            this.processEvent('init', undefined, { optional: true })
         }
     }
 
     componentWillUnmount() {
         if (this.logic) {
-            this.processEvent('cleanup', undefined)
+            this.processEvent('cleanup', undefined, { optional: true })
             this.logic.events.removeAllListeners()
         }
     }

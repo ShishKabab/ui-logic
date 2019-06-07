@@ -1,8 +1,8 @@
 {
   "name": "ui-logic-react",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "license": "MIT",
-  "description": "Storex core module - a storage layer without assumptions",
+  "description": "Separate your UI logic from your UI I/O - React bindings",
   "main": "lib/index.js",
   "typings": "lib/index",
   "scripts": {
@@ -12,7 +12,9 @@
     "test:watch": "mocha -r source-map-support/register -r ts-node/register \"ts/**/*.test.ts\" --watch --watch-extensions ts"
   },
   "keywords": [
+    "ui",
     "logic",
+    "react",
     "single-responsibilty"
   ],
   "author": "Vincent den Boer",
@@ -37,10 +39,10 @@
     "react": "^16.0.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.1",
-    "ui-logic-core": "^0.1.0"
+    "ui-logic-core": "^0.1.1"
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "ui-logic-core": "^0.1.0"
+    "ui-logic-core": "^0.1.1"
   }
 }

@@ -50,8 +50,7 @@ export abstract class UILogic< State, Event extends UIEvent<{}> > {
         if (!handler) {
             if (!options.optional) {
                 throw new Error(
-                    `Tried to process UI event which I couldn't find a process* method for (${eventName})`
-                    // + `, but I only have these ones: ${this._listHandlers()}`
+                    `Tried to process UI event which I couldn't find a handler method for (${eventName})`
                 )
             } else {
                 return

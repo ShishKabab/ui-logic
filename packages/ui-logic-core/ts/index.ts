@@ -1,52 +1,52 @@
 import { default as update, Spec } from 'immutability-helper';
 import { EventEmitter } from "events";
 
-export type UIEvent<EventTypes> = { init? : undefined, cleanup? : undefined } & {
+export type UIEvent<EventTypes> = { init?: undefined, cleanup?: undefined } & {
     [EventName in keyof EventTypes]: EventTypes[EventName]
 }
 export type UIMutation<State> = Spec<State>
 
-export interface UILogicInterface< State, Event extends UIEvent<{}> > {
-    events : EventEmitter
+export interface UILogicInterface<State, Event extends UIEvent<{}>> {
+    events: EventEmitter
 
-    getInitialState() : State | null
+    getInitialState(): State | null
     processUIEvent<EventName extends keyof Event>(
-        eventName : EventName,
-        options : ProcessUIEventOptions<State, Event, EventName>
-    ) : Promise<UIMutation<State> | null>
+        eventName: EventName,
+        options: ProcessUIEventOptions<State, Event, EventName>
+    ): Promise<UIMutation<State> | null>
 }
-export type ProcessUIEventOptions< State, Event extends UIEvent<{}>, EventName extends keyof Event > = {
-    event : Event[EventName],
-    previousState : State,
-    optional? : boolean,
-    direct? : boolean
+export type ProcessUIEventOptions<State, Event extends UIEvent<{}>, EventName extends keyof Event> = {
+    event: Event[EventName],
+    previousState: State,
+    optional?: boolean,
+    direct?: boolean
 }
-export type IncomingUIEvent< State, Event extends UIEvent<{}>, EventName extends keyof Event > = {
-    previousState : State,
-    event : Event[EventName]
+export type IncomingUIEvent<State, Event extends UIEvent<{}>, EventName extends keyof Event> = {
+    previousState: State,
+    event: Event[EventName]
 }
 
-export type UIEventHandlers< State, Event extends UIEvent<{}> > = {
-    [EventName in keyof Event] : UIEventHandler<State, Event, EventName>
+export type UIEventHandlers<State, Event extends UIEvent<{}>> = {
+    [EventName in keyof Event]: UIEventHandler<State, Event, EventName>
 }
 export type UIEventHandler<State, Event extends UIEvent<{}>, EventName extends keyof Event> =
-    (incoming : IncomingUIEvent<State, Event, EventName>) => UIMutation<State> | void
+    (incoming: IncomingUIEvent<State, Event, EventName>) => UIMutation<State> | Promise<UIMutation<State>> | Promise<void> | void
 
-export abstract class UILogic< State, Event extends UIEvent<{}> > {
+export abstract class UILogic<State, Event extends UIEvent<{}>> {
     events = new EventEmitter()
-    
-    abstract getInitialState() : State
 
-    emitMutation(mutation : UIMutation<State>) {
+    abstract getInitialState(): State
+
+    emitMutation(mutation: UIMutation<State>) {
         this.events.emit('mutation', mutation)
     }
 
-    withMutation(state : State, mutation : UIMutation<State> | void | undefined) {
+    withMutation(state: State, mutation: UIMutation<State> | void | undefined) {
         return update(state, mutation as any || {})
     }
 
-    async processUIEvent<EventName extends keyof Event>(eventName : EventName, options : ProcessUIEventOptions<State, Event, EventName>) : Promise<UIMutation<State> | void> {
-        const handler : UIEventHandler<State, Event, EventName> = (this as any)[eventName]
+    async processUIEvent<EventName extends keyof Event>(eventName: EventName, options: ProcessUIEventOptions<State, Event, EventName>): Promise<UIMutation<State> | void> {
+        const handler: UIEventHandler<State, Event, EventName> = (this as any)[eventName]
         if (!handler) {
             if (!options.optional) {
                 throw new Error(

@@ -1,6 +1,6 @@
 {
   "name": "ui-logic-core",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "license": "MIT",
   "description": "Separate your UI logic from your UI I/O",
   "main": "lib/index.js",

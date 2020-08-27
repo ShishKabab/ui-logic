@@ -62,7 +62,6 @@ export abstract class UILogic<State, Event extends UIEvent<{}>> {
             event: 'event' in options ? (options as any).event : undefined
         })
 
-        this.events.emit('eventProcessed', { event: eventName, mutation, oldState: options.previousState })
         if (mutation) {
             if (options.direct) {
                 return mutation

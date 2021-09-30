@@ -55,28 +55,23 @@ export abstract class UIElement<
         }
     }
 
-    componentWillMount() {
-        if (this.logic) {
-            this.logic.events.addListener('mutation', (mutation) =>
-                this.processMutation(mutation),
-            )
-        }
-    }
-
     get elementName() {
         return Object.getPrototypeOf(this).constructor.name
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         if (this.logic) {
-            this.processEvent('init', undefined, { optional: true })
+            this.logic.events.addListener('mutation', (mutation) =>
+                this.processMutation(mutation),
+            )
+            await this.processEvent('init', undefined, { optional: true })
         }
     }
 
-    componentWillUnmount() {
+    async componentWillUnmount() {
         if (this.logic) {
-            this.processEvent('cleanup', undefined, { optional: true })
             this.logic.events.removeAllListeners()
+            await this.processEvent('cleanup', undefined, { optional: true })
         }
     }
 }

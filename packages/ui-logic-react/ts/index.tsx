@@ -63,16 +63,16 @@ export abstract class UIElement<
         return Object.getPrototypeOf(this).constructor.name
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         if (this.logic) {
-            this.processEvent('init', undefined, { optional: true })
+            await this.processEvent('init', undefined, { optional: true })
         }
     }
 
-    componentWillUnmount() {
+    async componentWillUnmount() {
         if (this.logic) {
-            this.processEvent('cleanup', undefined, { optional: true })
             this.logic.events.removeAllListeners()
+            await this.processEvent('cleanup', undefined, { optional: true })
         }
     }
 }

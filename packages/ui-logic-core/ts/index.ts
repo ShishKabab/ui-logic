@@ -37,7 +37,13 @@ export abstract class UILogic<State, Event extends UIEvent<{}>> {
 
     abstract getInitialState(): State
 
-    emitMutation(mutation: UIMutation<State>) {
+    applyAndEmitMutation(state: State, mutation: UIMutation<State>): State {
+        const nextState = this.withMutation(state, mutation)
+        this.emitMutation(mutation)
+        return nextState
+    }
+
+    emitMutation(mutation: UIMutation<State>): void {
         this.events.emit('mutation', mutation)
     }
 

@@ -18,6 +18,10 @@ export abstract class UIElement<
 
         this.logic = options.logic
         if (this.logic) {
+            this.logic.events.addListener('mutation', (mutation) =>
+                this.processMutation(mutation),
+            )
+
             const initialState = this.logic.getInitialState()
             if (initialState) {
                 ;(this as any).state = this.newestState = this.logic.getInitialState()
@@ -52,14 +56,6 @@ export abstract class UIElement<
                 mutation as any,
             )
             this.setState(this.newestState)
-        }
-    }
-
-    componentWillMount() {
-        if (this.logic) {
-            this.logic.events.addListener('mutation', (mutation) =>
-                this.processMutation(mutation),
-            )
         }
     }
 
